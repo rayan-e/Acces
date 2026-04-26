@@ -1,12 +1,12 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
-@app.get("/")
-def home():
-    return {"message": "API Golf AI OK"}
+class GolfRequest(BaseModel):
+    action: str
 
-@app.get("/golf")
-def golf():
-    print("✅ Golf AI : requête reçue !")
-    return {"status": "reçu"}
+@app.post("/golf")
+def golf(req: GolfRequest):
+    print("📩 ACTION:", req.action)
+    return {"status": "ok"}
